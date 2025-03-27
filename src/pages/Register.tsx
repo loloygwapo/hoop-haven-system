@@ -7,7 +7,7 @@ import { PageTransition } from "@/components/PageTransition";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Basketball } from "lucide-react";
+import { Activity } from "lucide-react";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -56,7 +56,7 @@ export default function Register() {
         <div className="auth-form w-full max-w-md">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
-              <Basketball className="h-6 w-6 text-primary" />
+              <Activity className="h-6 w-6 text-primary" />
             </div>
             <h1 className="text-2xl font-bold tracking-tight">Create an account</h1>
             <p className="text-sm text-muted-foreground mt-1">

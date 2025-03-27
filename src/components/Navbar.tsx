@@ -4,7 +4,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { 
   Menu, 
   X, 
-  Basketball, 
+  Activity, 
   Calendar, 
   Users, 
   MessageCircle, 
@@ -50,7 +50,7 @@ export function Navbar() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-          <Basketball className="h-6 w-6 text-primary" />
+          <Activity className="h-6 w-6 text-primary" />
           <span className="font-bold">BasketTourney</span>
         </Link>
 

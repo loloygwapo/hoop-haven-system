@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -41,7 +40,6 @@ export function AdminScheduleTab() {
     setIsEditGameOpen(true);
   };
 
-  // Group games by date
   const gamesByDate: Record<string, Game[]> = games.reduce((acc, game) => {
     if (!acc[game.date]) {
       acc[game.date] = [];
@@ -50,7 +48,6 @@ export function AdminScheduleTab() {
     return acc;
   }, {} as Record<string, Game[]>);
 
-  // Sort dates chronologically
   const sortedDates = Object.keys(gamesByDate).sort((a, b) => 
     new Date(a).getTime() - new Date(b).getTime()
   );
@@ -128,7 +125,6 @@ export function AdminScheduleTab() {
         </div>
       )}
 
-      {/* Add Game Dialog */}
       <Dialog open={isAddGameOpen} onOpenChange={setIsAddGameOpen}>
         <DialogContent>
           <DialogHeader>
@@ -148,7 +144,6 @@ export function AdminScheduleTab() {
         </DialogContent>
       </Dialog>
 
-      {/* Edit Game Dialog */}
       <Dialog open={isEditGameOpen} onOpenChange={setIsEditGameOpen}>
         <DialogContent>
           <DialogHeader>
@@ -191,7 +186,9 @@ function GameForm({ game, onClose, onSubmit }: GameFormProps) {
   const [time, setTime] = useState(game?.time || "");
   const [court, setCourt] = useState(game?.location.id || "");
   const [round, setRound] = useState(game?.round || "Group Stage");
-  const [status, setStatus] = useState(game?.status || "scheduled");
+  const [status, setStatus] = useState<"scheduled" | "ongoing" | "completed" | "cancelled">(
+    game?.status || "scheduled"
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -219,18 +216,16 @@ function GameForm({ game, onClose, onSubmit }: GameFormProps) {
       return;
     }
     
-    // Create new game object
     const newGame: Omit<Game, "id"> = {
       homeTeam: selectedHomeTeam,
       awayTeam: selectedAwayTeam,
       date,
       time,
       location: selectedCourt,
-      status: status as any,
+      status,
       round,
     };
     
-    // If game is marked as completed, add a score
     if (status === "completed") {
       newGame.score = game?.score || {
         home: Math.floor(Math.random() * 30) + 70,
@@ -344,7 +339,7 @@ function GameForm({ game, onClose, onSubmit }: GameFormProps) {
           <Label htmlFor="status">Status *</Label>
           <Select
             value={status}
-            onValueChange={setStatus}
+            onValueChange={(value: "scheduled" | "ongoing" | "completed" | "cancelled") => setStatus(value)}
           >
             <SelectTrigger id="status">
               <SelectValue placeholder="Select status" />
